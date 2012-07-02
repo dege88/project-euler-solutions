@@ -32,5 +32,5 @@ void main()
 		if(tmp > max)
 			max = tmp;
 	}
-	printf("result: %ld\n", max);
+	printf("result: %d\n", max);
 }
