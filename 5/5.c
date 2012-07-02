@@ -5,28 +5,7 @@ int **factorize(long long int number);
 
 void main()
 {
-	int i,j,count;
-
-	int **outputs[19];
-	int *final[3];
-	
-	for(i = 2;i <= 20;i++)
-	{
-		//printf("indice %d\n",i);
-		outputs[i - 2] = factorize(i);
-	}
-	
-	for(i = 0;i < 19;i++)
-	{
-		//printf("index: %d count : %d\n", i + 2, outputs[i][0][0]);
-		for(j = 0;j < outputs[i][0][0];j++)
-			printf("%d -> %d : %d\n", i + 2, outputs[i][1][j],outputs[i][2][j]);
-	}
-}
-
-int **factorize(long long int number)
-{
-	long long int primi[] = {
+	int primi[] = {
 		2,
 		3, 5, 7, 11,
 		13, 17, 19, 23,
@@ -19653,71 +19632,20 @@ int **factorize(long long int number)
 		999883, 999907, 999917, 999931,
 		999953, 999959, 999961, 999979,
 		9999833};
-	int i,max,oldmax,count,j,oldnumber = number;
+	int num = 20;
 
-	int **output;
-
-	count = 0;
-	oldmax = 0;
-	while(number > 1)
+	int i, k, out = 1;
+	
+	for(i = 0;(i < 78498) && (primi[i] <= num);i++)
 	{
-		max = 1;
-		i = 78498;
-		while((max == 1) && (i > 0))
-		{
-			i--;
-			if((number % primi[i]) == 0)
-				max = primi[i];
-		}
-		if (max == 1)
-			number = 1;
-		else
-		{
-			number /= max;
-			if(max != oldmax)
-				count++;
-			oldmax = max;
-		}
-		//printf("%d\n",max);
-	}
 
-	output = (int**) malloc(sizeof(int*) * 3);
-	output[0] = (int*) malloc(sizeof(int));
-	output[1] = (int*) malloc(sizeof(int) * count);
-	output[2] = (int*) malloc(sizeof(int) * count);
-	output[0][0] = count;
-	//printf("count : %d\n", count);
-	j = -1;
-	number = oldnumber;
-	oldmax = 0;
-	while(number > 1)
-	{
-		max = 1;
-		i = 78498;
-		while((max == 1) && (i > 0))
-		{
-			i--;
-			if((number % primi[i]) == 0)
-				max = primi[i];
-		}
-		if (max == 1)
-			number = 1;
-		else
-		{
-			number /= max;
-			if(max != oldmax)
-			{
-				j++;
-				output[1][j] = max;
-				output[2][j] = 1;
-			}
-			else
-			{
-				output[2][j]++;
-			}
-			oldmax = max;
-		}
-		//printf("%d\n",max);
+		if (i != 0)
+			out *= k;
+		k = 1;
+		while(k <= num)
+			k *= primi[i];
+		k /= primi[i];
 	}
-	return output;
+	out *= k;
+	printf("result: %d\n", out);
 }
